@@ -1,0 +1,248 @@
+/* Variáveis globais: permitem reutilizar valores e
+   alterar o tema do site em um único lugar. */
+:root {
+  --bg: #121212;       /* Fundo escuro da página */
+  --surface: #1e1e1e;  /* Fundo de cards e blocos */
+  --text: #f5f5f5;     /* Cor principal do texto */
+  --primary: #646cff;  /* Cor de destaque, como botões */
+  --radius: 8px;       /* Arredondamento padrão */
+
+  scrollbar-gutter: stable; /* reserva o espaço da barra de rolagem vertical, evitando que o 
+                            conteúdo se mova quando a barra aparece */
+
+  overflow-y: scroll; /* Deixa a barra de rolagem vertical sempre a mostra, mesmo quando não 
+                         há conteúdo suficiente para rolar. Isso evita que o layout "salte" quando 
+                         a barra de rolagem aparece ou desaparece. */
+}
+
+/* Remove margens e preenchimentos padrão do navegador.
+   border-box inclui padding e borda no cálculo da largura
+   e altura dos elementos. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos gerais da página. */
+body {
+  font-family: Arial, sans-serif; /* Fonte simples e disponível */
+  background: var(--bg);          /* Usa a variável de fundo */
+  color: var(--text);             /* Define a cor do texto */
+  line-height: 1.5;                /* Melhora a leitura dos textos */
+}
+
+/* Elemento HTML onde o React renderiza a aplicação. */
+#root {
+  min-height: 100vh; /* Garante, no mínimo, a altura da tela */
+  display:flex;
+  flex-direction: column; /* Organiza header, main e footer verticalmente */
+}
+
+header, footer {
+  display:flex;
+  align-items: center;          /* Centraliza verticalmente */
+  justify-content: center; /* Espaço entre elementos */
+  background: var(--surface);   /* Fundo diferente do body */
+  border-bottom: 1px solid #333; /* Linha sutil separando o header */
+  height: 10vh; 
+  padding: 0 20px; /* Espaço interno para o header */
+}
+
+nav {
+  display: flex; /* Organiza os botões em linha */
+  align-self: center; /* Centraliza verticalmente os botões */
+  justify-content: center; /* Centraliza horizontalmente os botões */
+  width: 50%;
+  gap:40px; /* Faz o nav ocupar toda a largura disponível */
+  
+}
+
+a {
+  text-decoration: none; /* Remove o sublinhado padrão */
+  color: var(--text);     /* Usa a cor do texto definida */
+  font-weight: bold;      /* Deixa o texto em negrito */
+  font-size: 1.1em;        /* Aumenta levemente o tamanho da fonte */
+}
+
+a.active {
+  color: tomato;
+}
+
+p {
+  margin: 10px 0; /* Espaço entre parágrafos */
+ 
+}
+
+
+
+main {
+ display:flex;
+ flex-direction: column; /* Organiza os elementos verticalmente */
+ align-items: center; /* Centraliza horizontalmente */
+ justify-content: flex-start; /* Centraliza verticalmente */
+ flex:1; /* Faz o main ocupar o espaço restante */
+ padding: 20px; 
+ width: 100%; /* Garante que o main ocupe toda a largura disponível */
+}
+
+
+/* Estilo básico para todos os botões. */
+button {
+  padding: 10px 16px;          /* Espaço interno do botão */
+  border: 0;                   /* Remove a borda padrão */
+  border-radius: var(--radius); /* Reutiliza o arredondamento */
+  background: var(--primary);  /* Usa a cor de destaque */
+  color: white;                /* Contraste com o fundo */
+  cursor: pointer;             /* Indica que é clicável */
+}
+
+/* Efeito visual quando o mouse passa sobre o botão. */
+button:hover {
+  opacity: 0.85; /* Reduz um pouco a opacidade */
+}
+
+/* Classe reutilizável para criar cards. */
+.card {
+  padding: 20px;                /* Espaço entre conteúdo e borda */
+  background: var(--surface);  /* Fundo diferente do body */
+  border-radius: var(--radius); /* Cantos arredondados */
+}
+
+/* Acordeon */
+
+.acordeon {
+  display:flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.acordeon button {
+  font-size: 1.2em;
+}
+
+.acordeon .pergunta {
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.acordeon .resposta {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.acordeon .resposta.aberta {
+  grid-template-rows: 1fr;
+}
+
+.acordeon .resposta-conteudo {
+  overflow: hidden; /* essencial: esconde o conteúdo enquanto a altura é 0 */
+}
+
+/* Galeria */
+.galeria-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 coluna de tamanho igual */
+  gap: 10px; /* Espaço entre as imagens */
+  width: 80%; /* Largura da galeria */
+  margin-top: 20px; /* Espaço acima da galeria */
+}
+
+.galeria-grid img {
+  width: 100%; /* Faz a imagem ocupar toda a célula do grid */
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: var(--radius); /* Arredonda os cantos das imagens */
+  display: block; /* Remove o espaço embaixo da imagem */
+}
+
+@media (min-width: 768px) {
+  .galeria-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas em telas maiores */
+  }
+}
+
+/* Carousel */
+.carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 90%;
+  height: 60vh;
+}
+
+.carousel-track {
+  display: flex; /* Transforma o track em flexbox */
+  flex-wrap: nowrap; /* IMPEDE que as imagens quebrem linha e criem rows */
+  width: 100%;
+  height: 100%;
+  overflow-x: auto; /* Permite o deslize horizontal comandado pelo JS */
+  scroll-behavior: smooth; /* Deixa o deslize suave */
+  scroll-snap-type: x mandatory; /* Faz a imagem "grudar" no meio da tela ao parar */
+  
+  /* Esconde a barra de rolagem horizontal padrão no Chrome, Safari e Firefox */
+  scrollbar-width: none; 
+}
+.carousel-track::-webkit-scrollbar {
+  display: none; 
+}
+
+/* O tamanho do item é calculado por variáveis, evitando que as imagens amassem */
+.carousel-item {
+  flex: 0 0 calc((100% - (var(--cols-mobile) - 1) * 10px) / var(--cols-mobile)); /* Mobile por padrão */
+  height: 100%;
+  padding: 0 5px;
+  scroll-snap-align: start; /* Alinha o snap no início de cada imagem */
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+
+/* Media Queries atualizadas para alterar as colunas do Flexbox */
+@media (min-width: 768px) {
+  .carousel-item {
+    flex: 0 0 calc((100% - (var(--cols-tablet) - 1) * 10px) / var(--cols-tablet));
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-item {
+    flex: 0 0 calc((100% - (var(--cols-desktop) - 1) * 10px) / var(--cols-desktop));
+  }
+}
+
+/* Estilo fixo dos botões (Sem alterações) */
+button.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  cursor: pointer;
+  z-index: 10;
+}
+
+button.carousel-button-prev { left: 10px; }
+button.carousel-button-next { right: 10px; }
